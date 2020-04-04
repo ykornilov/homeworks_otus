@@ -1,0 +1,12 @@
+{
+  "name": "01_lesson",
+  "version": "1.0.0",
+  "description": "print tree",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd src && node index data.json"
+  },
+  "keywords": [],
+  "author": "Yury Kornilov",
+  "license": "ISC"
+}
