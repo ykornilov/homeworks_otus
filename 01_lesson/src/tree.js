@@ -3,12 +3,11 @@
 /**
  * Функция печати узла дерева
  * @param {string} name имя узла 
- * @param {number} level уровень, на котором находится узел
  * @param {boolean[]} arrIsLast массив флагов, которые показывают являются ли вышенаходящиеся узлы последними на своем уровне или нет
  */
-function print(name, level, arrIsLast) {
+function print(name, arrIsLast) {
     let str = '';
-    if (level === 0) {
+    if (arrIsLast.length === 0) {
         str = name;
     } else {
         const start = arrIsLast
@@ -27,16 +26,15 @@ function print(name, level, arrIsLast) {
  * Функция обхода дерева и применения выбранного метода (action) к его узлам
  * @param {function} action метод, который надо применить к узлу дерева данных
  * @param {object} data данные
- * @param {number} level уровень, на котором наодится обходчик
  * @param {boolean[]} arrIsLast массив флагов, которые показывают являются ли вышенаходящиеся узлы последними на своем уровне или нет
  */
-function traverse(action, data, level = 0, arrIsLast = []) {
+function traverse(action, data, arrIsLast = []) {
     if (!data || typeof data != 'object') return;
     const {name, items} = data;
 
-    action(name, level, arrIsLast);
+    action(name, arrIsLast);
     (items || []).forEach((item, i, arr) => 
-        traverse(action, item, level + 1, [...arrIsLast, i === arr.length - 1]));
+        traverse(action, item, [...arrIsLast, i === arr.length - 1]));
 }
 
 /**
