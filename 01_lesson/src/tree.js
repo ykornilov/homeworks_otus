@@ -6,9 +6,8 @@
  * @param {boolean[]} arrIsLast массив флагов, которые показывают являются ли вышенаходящиеся узлы последними на своем уровне или нет
  */
 function print(name, arrIsLast) {
-    let str = '';
     if (arrIsLast.length === 0) {
-        str = name;
+        console.log(name);
     } else {
         const start = arrIsLast
             .slice(0, -1)
@@ -17,9 +16,8 @@ function print(name, arrIsLast) {
                 : acc + '\u2503' + ' '.repeat(2)
             , '')
         const tail = `${arrIsLast[arrIsLast.length - 1] ? '\u2517' : '\u2523'}\u2501 ${name}`;
-        str = start + tail;
+        console.log(start + tail);
     }
-    console.log(str);
 }
 
 /**
@@ -29,11 +27,11 @@ function print(name, arrIsLast) {
  * @param {boolean[]} arrIsLast массив флагов, которые показывают являются ли вышенаходящиеся узлы последними на своем уровне или нет
  */
 function traverse(action, data, arrIsLast = []) {
-    if (!data || typeof data != 'object') return;
+    if (!data || typeof data !== 'object') return;
     const {name, items} = data;
 
     action(name, arrIsLast);
-    (items || []).forEach((item, i, arr) => 
+    items && items.forEach((item, i, arr) => 
         traverse(action, item, [...arrIsLast, i === arr.length - 1]));
 }
 
