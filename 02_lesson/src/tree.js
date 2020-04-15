@@ -5,7 +5,7 @@
  * @param {string} name имя узла 
  * @param {boolean[]} arrIsLast массив флагов, которые показывают являются ли вышенаходящиеся узлы последними на своем уровне или нет
  */
-function print(name, arrIsLast) {
+const print = (name, arrIsLast) => {
     if (arrIsLast.length === 0) {
         console.log(name);
     } else {
@@ -26,7 +26,7 @@ function print(name, arrIsLast) {
  * @param {object} data данные
  * @param {boolean[]} arrIsLast массив флагов, которые показывают являются ли вышенаходящиеся узлы последними на своем уровне или нет
  */
-function traverse(action, data, arrIsLast = []) {
+const traverse = (action, data, arrIsLast = []) => {
     if (!data || typeof data !== 'object') return;
     const {name, items} = data;
 
@@ -39,7 +39,7 @@ function traverse(action, data, arrIsLast = []) {
  * Функция печати дерева
  * @param {object} data 
  */
-function printTree(data) {
+const printTree = data => {
     traverse(print, data);
 }
 

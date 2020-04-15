@@ -10,32 +10,36 @@ const path = require('path');
  * @param {number} depth глубина обхода директорий от данного узла
  * @param {function} cb функция обратного вызова
  */
-function fillTree(tree, dirPath, depth, cb) {
+const fillTree = (tree, dirPath, depth, cb) => {
     fs.readdir(dirPath, (error, files) => {
         if (error) return cb(error);
         if (!files.length) return cb();
 
-        let counter = files.length;
-        files.forEach((file, i) => {
-            const filePath = path.join(dirPath, file);
+        let counter = 0;
+
+        const incCounter = () => {
+            counter++;
+            if (counter === files.length) return cb();
+        }
+
+        for (let i = 0; i < files.length; i++) {
+            const filePath = path.join(dirPath, files[i]);
             fs.stat(filePath, (error, stats) => {
                 if (error) return cb(error);
 
-                tree.items[i] = {name: file};
+                tree.items[i] = {name: files[i]};
                 if (!stats.isDirectory() || depth === 1) {
-                    counter -= 1;
-                    if (counter === 0) return cb();
+                    incCounter()
                 } else {
                     tree.items[i].items = [];
                     fillTree(tree.items[i], filePath, depth - 1, error => {
                         if (error) return cb(error);
 
-                        counter -= 1;
-                        if (counter === 0) return cb();
+                        incCounter()
                     });
                 }
             });
-        });
+        }
     });
 }
 
@@ -44,7 +48,7 @@ function fillTree(tree, dirPath, depth, cb) {
  * @param {string} directory путь директории (абсолютный или относительный)
  * @param {function} cb функция обратного вызова
  */
-function getDirectoryAbsolutePath(directory, cb) {
+const getDirectoryAbsolutePath = (directory, cb) => {
     const absolutePath = path.isAbsolute(directory)
         ? directory
         : path.join(process.cwd(), directory);
@@ -63,7 +67,7 @@ function getDirectoryAbsolutePath(directory, cb) {
  * @param {number} depth глубина обхода директории
  * @param {function} cb функция обратного вызова
  */
-function ls(dirPath, depth, cb) {
+const ls = (dirPath, depth, cb) => {
     if (!dirPath || !depth) return cb('Please enter directory and depth')
 
     getDirectoryAbsolutePath(dirPath, (error, absolutePath) => {
