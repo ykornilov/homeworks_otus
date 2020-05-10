@@ -1,0 +1,46 @@
+[
+    {
+        "id": 1,
+        "owner": 1,
+        "title": "Курс 1",
+        "description": "Принадлежит пользователю 1",
+        "lessons": [
+            {
+                "id": 1,
+                "title": "Занятие 1",
+                "description": "Занятие 1 курса 1",
+                "attachments": [
+                    {
+                        "id": 1,
+                        "filename": "test.txt",
+                        "description": "Описание прикрепленного файла"
+                    }
+                ],
+                "comments": [
+                    {
+                        "id": 1,
+                        "owner": 1,
+                        "content": "Какой-то комментарий"
+                    }
+                ]
+            }
+        ],
+        "users": [2]
+    },
+    {
+        "id": 2,
+        "owner": 2,
+        "title": "Курс 2",
+        "description": "Принадлежит пользователю 2",
+        "lessons": [
+            {
+                "id": 2,
+                "title": "Занятие 1",
+                "description": "Занятие 1 курса 2",
+                "attachments": [],
+                "comments": []
+            }
+        ],
+        "users": []
+    }
+]

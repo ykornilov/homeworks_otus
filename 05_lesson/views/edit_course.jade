@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    h1= course.title
+    form(class="form" method="post" action="/course/#{course.id}" autocomplete="off")
+        label(class="formRow") Название курса
+            input(type="text", name="title" value="#{course.title}")
+        label(class="formRow") Описание курса
+            textarea(name="description" cols="30" rows="10")= course.description
+        div(id="lessons")
+            - for (let i = 0; i < course.lessons.length; i++) {
+                fieldset(id="lesson-#{i}")
+                    label(class="formRow") Название занятия
+                        input(type="text", name="lessons[#{i}][title]" value="#{course.lessons[i].title}")
+                    label(class="formRow") Описание занятия
+                        input(type="text", name="lessons[#{i}][description]" value="#{course.lessons[i].description}")
+                    div(class="formActions")
+                        button(type="button" onclick="removeLesson(#{i})") Удалить занятие
+            - }
+        div(class="formActions")
+            button(type="button" onclick="addLesson()") Добавить занятие
+        div(class="formActions")
+            button(type="button" onclick="window.open('/course/#{course.id}', target='_self')") Отменить
+            button(type="submit") Применить
+    script(src="/javascripts/edit_course.js")
+        
