@@ -1,7 +1,7 @@
 const {updateCourse} = require('../../../utils/courses');
 
 const resolveUpdateCourse = (req, res) => {
-    const {course, courseAccess} = req;
+    const {courseAccess} = req;
 
     if (!courseAccess.isOwner) {
         return res.redirect(`/course/${req.params.courseId}`);
@@ -9,7 +9,7 @@ const resolveUpdateCourse = (req, res) => {
 
     const {title, description, lessons} = req.body;
   
-    updateCourse({courseId, title, description, lessons});
+    updateCourse({courseId: Number(req.params.courseId), title, description, lessons});
     res.redirect(`/course/${req.params.courseId}`);
 }
 
