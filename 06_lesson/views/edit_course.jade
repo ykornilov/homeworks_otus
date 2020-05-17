@@ -1,0 +1,37 @@
+extends layout
+
+block content
+    h1= course.title
+    form(class="form" method="post" action="/course/#{course.id}" autocomplete="off")
+        div(class="form-group")
+            label(for="title") Название курса
+            input(type="text", name="title" id="title" class="form-control" value="#{course.title}")
+        
+        div(class="form-group")
+            label(for="description") Описание курса
+            textarea(name="description" id="description" class="form-control" cols="30" rows="5")= course.description
+
+        div(id="lessons")
+            - for (let i = 0; i < course.lessons.length; i++) {
+                fieldset(id="lesson-#{i}")
+                    div(class="form-group")
+                        label(for="lessons[#{i}][title]") Название занятия
+                        input(type="text", name="lessons[#{i}][title]" id="lessons[#{i}][title]" class="form-control" value="#{course.lessons[i].title}")
+                    
+                    div(class="form-group")
+                        label(for="lessons[#{i}][description]") Описание занятия
+                        input(type="text" name="lessons[#{i}][description]" id="lessons[#{i}][description]" class="form-control" value="#{course.lessons[i].description}")
+                
+                    div(class="formActions form-group")
+                        button(class="btn btn-secondary" type="button" onclick="removeLesson(#{i})") Удалить занятие
+            - }
+
+        div(class="formActions form-group")
+            button(class="btn btn-secondary" type="button" onclick="addLesson()") Добавить занятие
+    
+        div(class="formActions form-group")
+            button(class="btn btn-secondary" type="button" onclick="window.open('/course/#{course.id}', target='_self')") Отменить
+            button(class="btn btn-primary" type="submit") Применить
+
+    script(src="/javascripts/edit_course.js")
+        
