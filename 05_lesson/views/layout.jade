@@ -1,0 +1,10 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    if isAuthorized
+      form(method="post" action="/signout")
+        button(type="submit") Выйти
+    block content

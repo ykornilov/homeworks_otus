@@ -1,0 +1,28 @@
+extends layout
+
+block content
+    h1= course.title
+    - for (let i = 0; i < course.lessons.length; i++) {
+        section(class="lessonSection")
+            h2= course.lessons[i].title
+            p= course.lessons[i].description
+            if hasAccess
+                a(href="/course/#{course.id}/lesson/#{course.lessons[i].id}") Перейти к занятию
+    - }
+    if isOwner
+        button(onclick="window.open('/course/#{course.id}?mode=edit', target='_self')") Редактировать курс
+        form(class="form" method="post" id="userAccessForm")
+            label(class="formRow") Пользователь
+                select(name="user" id="user")
+                    - for (let i = 0; i < users.length; i++) {
+                        option(value="#{users[i].id}")= users[i].login
+                    - }
+            label(class="formRow") Доступ к курсу
+                input(type="checkbox" name="hasAccess" id="hasAccess")
+    div(class="backNavigation")
+        a(href="/course") Вернуться к списку курсов
+    if isOwner
+        script.
+            window.users = !{JSON.stringify(users)};
+            window.courseId = !{course.id};
+        script(src="/javascripts/course.js")

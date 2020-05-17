@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  form(class="form" method="post" action="/signin")
+    label(class="formRow") Логин
+      input(type="text" name="login")
+    label(class="formRow") Пароль
+      input(type="password" name="password" autocomplete="new-password")
+    div(class="formActions")
+      button(type="submit") Войти

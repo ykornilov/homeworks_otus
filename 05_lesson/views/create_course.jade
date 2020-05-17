@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    h1 Новый курс
+    form(class="form" method="post" action="/course" autocomplete="off")
+        label(class="formRow") Название курса
+            input(type="text", name="title")
+        label(class="formRow") Описание курса
+            textarea(name="description" cols="30" rows="10")
+        div(class="formActions")
+            button(type="button" onclick="window.open('/course', target='_self')") Отменить
+            button(type="submit") Создать

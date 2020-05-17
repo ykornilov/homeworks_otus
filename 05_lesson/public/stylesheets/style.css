@@ -1,0 +1,55 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.courseSection,
+.lessonSection {
+  margin-bottom: 30px;
+}
+
+.form {
+  display: block;
+  max-width: max-content;
+  margin: 0 auto;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.formRow > *:last-child {
+  width: 500px;
+  margin-left: 10px;
+}
+
+.formActions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+.formActions > *:not(:last-child) {
+  margin-right: 10px;
+}
+
+fieldset {
+  margin-bottom: 30px;
+}
+
+fieldset .formActions {
+  margin-bottom: 10px;
+}
+
+.backNavigation {
+  margin-top: 30px;
+}
