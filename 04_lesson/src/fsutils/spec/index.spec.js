@@ -12,21 +12,17 @@ describe('function ls', () => {
     });
 
     it('should return error in callback if path is undefined', done => {
-        const cb = error => {
+        ls(undefined, 2, error => {
             expect(error).toBe('Please enter directory and depth');
             done();
-        };
-
-        ls(undefined, 2, cb);
+        });
     });
 
     it('should return error in callback if option depth is undefined', done => {
-        const cb = error => {
+        ls('/testPath', undefined, error => {
             expect(error).toBe('Please enter directory and depth');
             done();
-        };
-
-        ls('/testPath', undefined, cb);
+        });
     });
 
     it('should return error in callback if getDirectoryAbsolutePath return error', done => {
@@ -34,12 +30,10 @@ describe('function ls', () => {
             cb('getDirectoryAbsolutePath error');
         });
 
-        const cb = error => {
+        ls('/testPath', 2, error => {
             expect(error).toBe('getDirectoryAbsolutePath error');
             done();
-        };
-
-        ls('/testPath', 2, cb);
+        });
     });
 
     it('should return error in callback if fillTree return error', done => {
@@ -50,12 +44,10 @@ describe('function ls', () => {
             cb('fillTree error');
         });
 
-        const cb = error => {
+        ls('/testPath', 2, error => {
             expect(error).toBe('fillTree error');
             done();
-        };
-
-        ls('/testPath', 2, cb);
+        });
     });
 
     it('should return tree in callback', done => {
@@ -70,11 +62,9 @@ describe('function ls', () => {
             items: [],
         };
 
-        const cb = (_, data) => {
+        ls('/testPath', 2, (_, data) => {
             expect(data).toStrictEqual(expectedResult);
             done();
-        };
-
-        ls('/testPath', 2, cb);
+        });
     });
 });
