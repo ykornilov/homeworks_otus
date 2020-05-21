@@ -1,0 +1,6 @@
+extends layout
+
+block content
+    form(method="post" action="/auth/logout" class="d-flex flex-row-reverse")
+        button(type="submit" class="btn btn-secondary") Выйти
+    h1 Страница для авторизованных пользователей
