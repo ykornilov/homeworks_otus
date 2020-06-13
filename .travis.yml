@@ -13,6 +13,6 @@ before_deploy:
   - docker run --rm ykornilov/node-web-app /bin/sh -c "npm test"
 deploy:
   provider: script
-  script: bash ./travis/deploy_dockerhub.sh
+  script: bash ./travis/deploy_dockerhub.sh && bash ./travis/deploy_heroku.sh
   on:
     branch: 10_lesson
