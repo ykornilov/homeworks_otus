@@ -1,6 +1,6 @@
 # Домашнее задание занятия Деплой приложения
 
-## Запуск
+## Запуск приложения локально
 
 Запуск сервера:
 ```
@@ -19,3 +19,8 @@ docker logs <container_id>
 docker exec -it <container id> /bin/bash
 ```
 
+## Релиз на Heroku
+
+```
+https://floating-hollows-35777.herokuapp.com/
+```
