@@ -1,0 +1,40 @@
+extends layout
+
+block content
+    h1= lesson.title
+    p= lesson.description
+    h2 Дополнительные материалы
+    ul
+    - for (let i = 0; i < lesson.attachments.length; i++) {
+        li
+            a(href="/course/#{courseId}/lesson/#{lesson.id}/attachment/#{lesson.attachments[i].id}")= lesson.attachments[i].filename
+            p= lesson.attachments[i].description
+    - }
+    h2 Комментарии
+    - for (let i = 0; i < lesson.comments.length; i++) {
+        p= lesson.comments[i].content
+    - }
+    form(class="commentForm secondaryForm" method="post" action="/course/#{courseId}/lesson/#{lesson.id}/comment")
+        div(class="form-group")
+            label(for="content") Комментарий
+            textarea(name="content" id="content" class="form-control" cols="30" rows="5")
+
+        div(class="formActions form-group")
+            button(class="btn btn-primary" type="submit") Добавить
+
+    if isOwner
+        h3 Дополнительный материал
+        form(class="secondaryForm" method="post" action="/course/#{courseId}/lesson/#{lesson.id}/attachment" enctype="multipart/form-data")
+            div(class="form-group")
+                label(for="attachment") Файл
+                input(type="file" name="attachment" id="attachment" class="form-control-file")
+
+            div(class="form-group")
+                label(for="description") Описание
+                textarea(class="form-control" name="description" id="description" cols="30" rows="5")
+        
+            div(class="formActions form-group")
+                button(class="btn btn-primary" type="submit") Добавить
+
+    div(class="backNavigation")
+        a(href="/course/#{courseId}") Вернуться к занятиям курса

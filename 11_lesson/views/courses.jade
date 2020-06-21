@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    h1 Каталог курсов
+    - for (let i = 0; i < courses.length; i++) {
+        section(class="courseSection")
+            h2= courses[i].title
+            p= courses[i].description
+            a(href="/course/#{courses[i].id}") Перейти к курсу
+    - }
+    button(class="btn btn-primary" onclick="window.open('/course?mode=create', target='_self')") Создать курс
