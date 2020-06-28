@@ -1,14 +1,14 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import https from 'https';
+import dotenv from 'dotenv';
+import debugService from 'debug';
 
-/**
- * Module dependencies.
- */
-require('dotenv').config();
+dotenv.config();
 
-const app = require('./app');
-const debug = require('debug')('express-example:server');
-const https = require('https');
+import app from './app';
+
+const debug = debugService('express-example:server');
 
 /**
  * Get port from environment and store in Express.
@@ -40,7 +40,7 @@ server.on('listening', onListening);
  * Normalize a port into a number, string, or false.
  */
 
-function normalizePort(val) {
+function normalizePort(val: string) {
   const port = parseInt(val, 10);
 
   if (isNaN(port)) {
@@ -60,7 +60,7 @@ function normalizePort(val) {
  * Event listener for HTTP server "error" event.
  */
 
-function onError(error) {
+function onError(error: NodeJS.ErrnoException) {
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -90,8 +90,10 @@ function onError(error) {
 
 function onListening() {
   const addr = server.address();
-  const bind = typeof addr === 'string'
+  if (addr) {
+    const bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+    debug('Listening on ' + bind);
+  }
 }
