@@ -3,6 +3,7 @@ import {Request, Response, NextFunction} from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
 import {coursesService} from '../services/database';
+import {ICourse} from '../services/database/models/courses';
 import {BaseController} from './base';
 
 class CoursesController extends BaseController {
@@ -21,7 +22,7 @@ class CoursesController extends BaseController {
         this.router.post('/', this.createCourse);
     };
 
-    private jwtAuthenticate(req: Request, res: Response, next: NextFunction) {
+    private jwtAuthenticate(req: Request, res: Response, next: NextFunction): void {
         passport.authenticate('jwt', {session: false}, (error, isAuth) => {
             if (error) return next(error);
     
@@ -31,7 +32,7 @@ class CoursesController extends BaseController {
         })(req, res, next);
     };
 
-    private resolveUser(req: Request, res: Response, next: NextFunction) {
+    private resolveUser(req: Request, res: Response, next: NextFunction): void {
         const decoded = jwt.decode(req.cookies.token); 
         const userId = decoded && typeof decoded === 'object' && decoded.id;
         if (!userId) return res.redirect('/');
@@ -41,9 +42,9 @@ class CoursesController extends BaseController {
         next();
     };
 
-    private resolveCourse(req: Request, res: Response, next: NextFunction) {
+    private resolveCourse(req: Request, res: Response, next: NextFunction): void {
         coursesService.getCourse(req.params.courseId)
-            .then(course => {
+            .then((course: ICourse | null): void => {
                 if (!course) return res.redirect('/');
                 req.course = course;
                 const isOwner = String(course.owner) === req.userId;
@@ -54,7 +55,7 @@ class CoursesController extends BaseController {
             .catch(next);
     };
 
-    private resolveLesson(req: Request, res: Response, next: NextFunction) {
+    private resolveLesson(req: Request, res: Response, next: NextFunction): void {
         const {course} = req;
 
         if (!course) return res.redirect('/');
@@ -70,7 +71,7 @@ class CoursesController extends BaseController {
         next();
     };
 
-    private getCoursesPage(req: Request, res: Response, next: NextFunction) {
+    private getCoursesPage(req: Request, res: Response, next: NextFunction): void {
         const isCreateMode = req.query.mode === 'create';
 
         if (isCreateMode) return res.render('create_course', {isAuthorized: true});
@@ -80,7 +81,7 @@ class CoursesController extends BaseController {
             .catch(next);
     };
 
-    private getCoursePage(req: Request, res: Response, next: NextFunction) {
+    private getCoursePage(req: Request, res: Response, next: NextFunction): void {
         const {course, courseAccess} = req;
         const isEditMode = req.query.mode === 'edit';
 
@@ -93,7 +94,7 @@ class CoursesController extends BaseController {
             .catch(next);
     };
 
-    private createCourse(req: Request, res: Response, next: NextFunction) {
+    private createCourse(req: Request, res: Response, next: NextFunction): void {
         const {title, description} = req.body;
         const userId = req.userId;
 
@@ -102,7 +103,7 @@ class CoursesController extends BaseController {
             .catch(next);
     };
 
-    private updateCourse(req: Request, res: Response, next: NextFunction) {
+    private updateCourse(req: Request, res: Response, next: NextFunction): void {
         const {courseAccess} = req;
 
         if (!courseAccess?.isOwner) return res.redirect(`/course/${req.params.courseId}`);
@@ -113,7 +114,7 @@ class CoursesController extends BaseController {
             .catch(next);     
     };
 
-    private getLessonPage(req: Request, res: Response) {
+    private getLessonPage(req: Request, res: Response): void {
         res.render('lesson', {
             isAuthorized: true,
             courseId: req.params.courseId,
@@ -122,7 +123,7 @@ class CoursesController extends BaseController {
         });
     };
 
-    private getAttachment(req: Request, res: Response) {
+    private getAttachment(req: Request, res: Response): void {
         if (!req.course) return res.redirect('/');
         const attachment = coursesService.getAttachment(req.course, req.params.lessonId, req.params.attachmentId);
 
@@ -131,7 +132,7 @@ class CoursesController extends BaseController {
         res.download(path.join(__dirname, '..', '..', 'private', attachment.filename));
     };
 
-    private createAttachment(req: Request, res: Response, next: NextFunction) {
+    private createAttachment(req: Request, res: Response, next: NextFunction): void {
         if (!req.course || !req?.courseAccess?.isOwner || !req?.files?.attachment) return res.redirect(`/course/${req.params.courseId}/lesson/${req.params.lessonId}`);
         const attachment = Array.isArray(req.files.attachment) ? req.files.attachment[0] : req.files.attachment;
 
@@ -142,7 +143,7 @@ class CoursesController extends BaseController {
             .catch(next);
     };
 
-    private createComment(req: Request, res: Response, next: NextFunction) {
+    private createComment(req: Request, res: Response, next: NextFunction): void {
         const {userId, course} = req;
         if (!course) return res.redirect('/');
 
@@ -151,7 +152,7 @@ class CoursesController extends BaseController {
             .catch(next);
     };
 
-    private changeAccess(req: Request, res: Response, next: NextFunction) {
+    private changeAccess(req: Request, res: Response, next: NextFunction): void {
         const {course, courseAccess} = req;
         if (!course || !courseAccess?.isOwner) return res.redirect(`/course/${req.params.courseId}`);
 

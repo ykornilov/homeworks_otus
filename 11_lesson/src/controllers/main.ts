@@ -1,6 +1,7 @@
 import {Request, Response, NextFunction} from 'express';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
+import {IUser} from '../services/database/models/users';
 import {BaseController} from './base';
 
 class MainController extends BaseController {
@@ -10,8 +11,8 @@ class MainController extends BaseController {
         this.router.post('/logout', this.resolveLogout);
     };
 
-    private redirectAuthUser(req: Request, res: Response, next: NextFunction) {
-        passport.authenticate('jwt', {session: false}, (error, isAuth) => {
+    private redirectAuthUser(req: Request, res: Response, next: NextFunction): void {
+        passport.authenticate('jwt', {session: false}, (error: any, isAuth: boolean): void => {
             if (error) return next(error);
     
             if (isAuth) return res.redirect('/course');
@@ -24,8 +25,8 @@ class MainController extends BaseController {
         res.render('index', {title: 'My Courses'});
     };
 
-    private resolveLogin(req: Request, res: Response, next: NextFunction) {
-        passport.authenticate('local', {session: false}, (error, user) => {
+    private resolveLogin(req: Request, res: Response, next: NextFunction): void {
+        passport.authenticate('local', {session: false}, (error: any, user: IUser | null): void => {
             if (error) return next(error);
     
             if (!user) {
@@ -49,7 +50,7 @@ class MainController extends BaseController {
         })(req, res, next);
     };
 
-    private resolveLogout(req: Request, res: Response) {
+    private resolveLogout(req: Request, res: Response): void {
         res.clearCookie('token');
         req.logout();
         res.redirect('/');

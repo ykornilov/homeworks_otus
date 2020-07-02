@@ -8,22 +8,6 @@ import addRequestId from 'express-request-id';
 
 import {passportInit} from './passport';
 import {mainController, coursesController} from './controllers';
-import {ICourse, ILesson} from './services/database/models/courses';
-
-declare global {
-    export namespace Express {
-        export interface Request {
-            requestId: string,
-            userId?: string,
-            course?: ICourse,
-            courseAccess?: {
-                isOwner: boolean,
-                hasAccess: boolean,
-            },
-            lesson?: ILesson,
-        }
-    }
-}
 
 passportInit();
 
@@ -56,12 +40,12 @@ app.use('/course', coursesController);
 app.use('/', mainController);
 
 // catch 404 and forward to error handler
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((req: Request, res: Response, next: NextFunction): void => {
     next(createError(404));
 });
   
 // error handler
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction): void => {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
