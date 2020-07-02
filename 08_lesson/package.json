@@ -1,0 +1,26 @@
+{
+  "name": "08_lesson",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Yury Kornilov",
+  "license": "ISC",
+  "dependencies": {
+    "debug": "4.1.1",
+    "express": "4.17.1",
+    "express-request-id": "1.4.1",
+    "http-errors": "1.7.3",
+    "jade": "1.11.0",
+    "morgan": "1.10.0",
+    "ws": "7.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.3"
+  }
+}
