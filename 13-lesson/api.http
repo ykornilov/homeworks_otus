@@ -1,0 +1,54 @@
+# Auth
+POST http://localhost:3000/auth/login
+content-type: application/json
+
+{
+    "username": "user1",
+    "password": "pass1"
+}
+
+###
+
+# Logout
+
+POST http://localhost:3000/auth/logout
+content-type: application/json
+
+###
+
+# Get navigations
+GET http://localhost:3000/navigations
+content-type: application/json
+
+###
+
+# Get navigation
+GET http://localhost:3000/navigations/1
+content-type: application/json
+
+###
+
+# Create navigation
+POST http://localhost:3000/navigations
+content-type: application/json
+
+{
+    "name": "Администрирование",
+    "url": "/admin"
+}
+
+###
+
+# Update navigation
+PUT http://localhost:3000/navigations/1
+content-type: application/json
+
+{
+    "name": "Лучшие курсы"
+}
+
+###
+
+# Delete navigation
+DELETE  http://localhost:3000/navigations/1
+content-type: application/json
