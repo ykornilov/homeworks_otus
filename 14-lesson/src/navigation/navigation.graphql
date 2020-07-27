@@ -10,20 +10,20 @@ type Mutation {
 }
 
 type Navigation {
-    id: Int!,
-    name: String!,
-    url: String!,
-    icon: String,
+    id: Int!
+    name: String!
+    url: String!
+    icon: String
 }
 
 input CreateNavigationInput {
-    name: String!,
-    url: String!,
-    icon: String,
+    name: String!
+    url: String!
+    icon: String
 }
 
 input UpdateNavigationInput {
-    name: String,
-    url: String,
-    icon: String,
+    name: String
+    url: String
+    icon: String
 }
