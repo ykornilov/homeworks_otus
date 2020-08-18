@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - "14.0"
+services:
+  - docker
+env:
+  - TEST_DIR=10_lesson
+  # - TEST_DIR=11_lesson - это позволит проверять несколько директорий
+script: cd $TEST_DIR && npm install && npm test
+
+before_deploy:
+  - docker build -t ykornilov/node-web-app .
+  - docker run --rm ykornilov/node-web-app /bin/sh -c "npm test"
+deploy:
+  provider: script
+  script: bash ./travis/deploy_dockerhub.sh && bash ./travis/deploy_heroku.sh
+  on:
+    branch: 10_lesson

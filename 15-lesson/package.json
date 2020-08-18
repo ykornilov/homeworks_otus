@@ -1,0 +1,32 @@
+{
+  "name": "15-lesson",
+  "version": "1.0.0",
+  "description": "",
+  "private": "true",
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "start": "node build/index.js",
+    "dev": "nodemon -r dotenv/config --exec ts-node src/index.ts",
+    "migrate": "node -r dotenv/config ./node_modules/.bin/sequelize-cli db:migrate",
+    "migrate:undo": "node -r dotenv/config ./node_modules/.bin/sequelize-cli db:migrate:undo:all",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "2.16.1",
+    "graphql": "15.3.0",
+    "pg": "8.3.0",
+    "reflect-metadata": "0.1.13",
+    "sequelize": "5.22.3",
+    "sequelize-typescript": "1.1.0"
+  },
+  "devDependencies": {
+    "dotenv": "8.2.0",
+    "nodemon": "2.0.4",
+    "sequelize-cli": "6.2.0",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.7"
+  }
+}
